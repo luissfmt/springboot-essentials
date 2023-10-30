@@ -8,11 +8,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class AnimeService {
 //  private final AnimeRepository animeRepository;
-  private List<Anime> animes = new ArrayList<>(Arrays.asList(new Anime(1L, "DBZ"), new Anime(2L, "Berserk")));
+  private static List<Anime> animes = new ArrayList<>(Arrays.asList(new Anime(1L, "DBZ"), new Anime(2L, "Berserk")));
+
   public List<Anime> listAll() {
     return animes;
   }
@@ -26,5 +28,13 @@ public class AnimeService {
 
   public void delete(Long id) {
     animes.remove(findById(id));
+  }
+
+  public Anime save(Anime anime) {
+    anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
+
+    animes.add(anime);
+
+    return anime;
   }
 }
