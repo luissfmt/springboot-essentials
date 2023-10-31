@@ -1,6 +1,8 @@
 package academy.devdojo.springboot2.controller;
 
 import academy.devdojo.springboot2.domain.Anime;
+import academy.devdojo.springboot2.requests.AnimePostRequestBody;
+import academy.devdojo.springboot2.requests.AnimePutRequestBody;
 import academy.devdojo.springboot2.service.AnimeService;
 import academy.devdojo.springboot2.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +28,11 @@ public class AnimeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(animeService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody anime) {
       return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
     }
 
@@ -42,7 +44,7 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Anime> replace(@RequestBody Anime anime) {
+    public ResponseEntity<Anime> replace(@RequestBody AnimePutRequestBody anime) {
       animeService.replace(anime);
 
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
