@@ -13,3 +13,8 @@ spring:
       dbl-auto: update
     defer-datasource-initialization: true
     show-sql: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
