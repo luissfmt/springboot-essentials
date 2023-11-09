@@ -26,13 +26,13 @@ public class AnimeService {
     return animeRepository.findAll();
   }
 
-  public List<Anime> findByName(String name) {
-    return animeRepository.findByName(name);
-  }
-
   public Anime findByIdOrThrowBadRequestException(Long id) {
     return animeRepository.findById(id)
-          .orElseThrow(() -> new BadRequestException("Anime not found"));
+            .orElseThrow(() -> new BadRequestException("Anime not found"));
+  }
+
+  public List<Anime> findByName(String name) {
+    return animeRepository.findByName(name);
   }
 
   public Anime save(AnimePostRequestBody animePostRequestBody) {
