@@ -17,7 +17,8 @@
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-		<lombok.version>1.18.16</lombok.version>
+		<lombok.version>1.18.28</lombok.version>
+		<maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -69,6 +70,26 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>integration-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${maven-surefire-plugin.version}</version>
+						<configuration>
+							<includes>
+								<include>**/*IT.*</include>
+							</includes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -79,6 +100,7 @@
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
 						</exclude>
 					</excludes>
 				</configuration>
