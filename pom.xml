@@ -19,6 +19,11 @@
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<lombok.version>1.18.28</lombok.version>
 		<maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+		<jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
+		<docker.distroless.image>gcr.io/distroless/java:17</docker.distroless.image>
+		<docker.repo.url>luissfmt</docker.repo.url>
+		<docker.repo.project>springboot2-essentials</docker.repo.project>
+		<docker.image.name>${docker.repo.url}/${docker.repo.project}</docker.image.name>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -92,6 +97,25 @@
 			<id>integration-tests</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>${jib-maven-plugin.version}</version>
+						<configuration>
+							<from>
+								<image>${docker.distroless.image}</image>
+							</from>
+							<to>
+								<image>${docker.image.name}</image>
+								<tags>
+									<tag>${project.version}</tag>
+								</tags>
+							</to>
+							<container>
+								<mainClass>academy.devdojo.springboot2.Springboot2EssentialsApplication</mainClass>
+							</container>
+						</configuration>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
