@@ -1,4 +1,9 @@
-version: '3.1'
+version: '2.4'
+x-database-variables: &database-variables
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/anime?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: root
+
 services:
   db:
     image: mysql
@@ -9,6 +14,7 @@ services:
       - "3306:3306"
     volumes:
       - devdojo_data:/var/lib/mysql
+    mem_limit: 512m
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -18,11 +24,20 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
+    mem_limit: 128m
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
       - "3000:3000"
+    mem_limit: 128m
+  springboot2-essentials:
+    image: luissfmt/springboot2-essentials:latest
+    ports:
+      - "8080:8080"
+    environment:
+      <<: *database-variables
+    mem_limit: 512m
 
 volumes:
   devdojo_data:
